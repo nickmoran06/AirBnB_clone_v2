@@ -43,6 +43,19 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
             obj = eval("{}()".format(my_list[0]))
+            obj1 = my_list[0]
+            dict1 = {}
+            for i in range(1, len(my_list)):
+                argu = my_list[i].split("=")
+                argu1 = argu[1].replace("'", " ")
+                dict1[argu[0]] = eval(argu1)
+
+            for key, value in dict1.items():
+                attr = key
+                val = str(value)
+                line = obj1 + " " + obj.id + " " + attr + " " + val
+                self.do_update(line)
+
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
@@ -204,8 +217,7 @@ class HBNBCommand(cmd.Cmd):
         Args:
             args: input list of args
         Return:
-            returns string of argumetns
-        """
+            returns string of argumetns """
         new_list = []
         new_list.append(args[0])
         try:
