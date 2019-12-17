@@ -180,7 +180,7 @@ class HBNBCommand(cmd.Cmd):
             try:
                 v.__dict__[my_list[2]] = eval(my_list[3])
             except Exception:
-                v.__dict__[my_list[2]] = my_list[3]
+                v.__dict__[my_list[2]] = my_list[3].replace("_", ' ')
                 v.save()
         except SyntaxError:
             print("** class name missing **")
