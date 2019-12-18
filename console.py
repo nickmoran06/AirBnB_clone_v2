@@ -53,8 +53,7 @@ class HBNBCommand(cmd.Cmd):
             for key, value in dict1.items():
                 attr = key
                 val = str(value)
-                line = obj1 + " " + obj.id + " " + attr + " " + val
-                self.do_update(line)
+                setattr(obj, attr, val)
 
             obj.save()
             print("{}".format(obj.id))
