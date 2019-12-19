@@ -13,6 +13,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from shlex import split
+import shlex
 
 
 class HBNBCommand(cmd.Cmd):
@@ -46,18 +47,17 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
             obj = eval("{}()".format(my_list[0]))
-            obj1 = my_list[0]
-            dict1 = {}
             for i in range(1, len(my_list)):
-                argu = my_list[i].split("=")
-                argu1 = argu[1].replace("'", " ")
-                dict1[argu[0]] = eval(argu1)
-
-            for key, value in dict1.items():
-                attr = key
-                val = str(value)
-                setattr(obj, attr, val)
-
+                arg = my_list[i].replace("=", " ")
+                arg = shlex.split(arg)
+                arg2 = arg[1].replace("_", " ")
+                try:
+                    pru = eval(arg2)
+                    arg2 = pru
+                except:
+                    pass
+                if type(arg2) is not tuple:
+                    setattr(obj, arg[0], arg2)
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
