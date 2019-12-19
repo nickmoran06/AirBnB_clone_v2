@@ -19,6 +19,7 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
-        """ Getter cities
+        """
+        Getter cities
         """
         return self.cities
