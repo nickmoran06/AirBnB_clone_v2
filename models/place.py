@@ -41,7 +41,8 @@ class Place(BaseModel, Base):
 
     @property
     def reviews(self):
-        """Getter attribute to return list of Review instances
+        """
+        Getter attribute to return list of Review instances
         """
         Mylist = []
         Ins_Review = models.storage.all(Review)

@@ -46,7 +46,8 @@ class FileStorage:
             self.__objects[key] = obj
 
     def save(self):
-        """serialize the file path to JSON file path
+        """
+        serialize the file path to JSON file path
         """
         my_dict = {}
         for key, value in self.__objects.items():
@@ -55,7 +56,8 @@ class FileStorage:
             json.dump(my_dict, f)
 
     def reload(self):
-        """serialize the file path to JSON file path
+        """
+        serialize the file path to JSON file path
         """
         try:
             with open(self.__file_path, 'r', encoding="UTF-8") as f:
@@ -66,7 +68,8 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """ Delete objs
+        """
+        Delete objs
         """
         if obj:
             key = "{}.{}".format(type(obj).__name__, obj.id)

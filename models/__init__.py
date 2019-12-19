@@ -15,6 +15,7 @@ import os
 
 data = os.getenv('HBNB_TYPE_STORAGE')
 
+
 if data == 'db':
     storage = DBStorage()
     storage.reload()

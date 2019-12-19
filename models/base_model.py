@@ -57,12 +57,14 @@ class BaseModel:
             type(self).__name__, self.id, self.__dict__)
 
     def __repr__(self):
-        """return a string representaion
+        """
+        return a string representaion
         """
         return self.__str__()
 
     def save(self):
-        """updates the public instance attribute updated_at to current
+        """
+        updates the public instance attribute updated_at to current
         """
         self.updated_at = datetime.now()
         models.storage.new(self)
@@ -81,6 +83,7 @@ class BaseModel:
         return my_dict
 
     def delete(self):
-        """ Delete an current instance
+        """
+        Delete an current instance
         """
         del self

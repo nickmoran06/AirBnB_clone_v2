@@ -15,7 +15,8 @@ import os
 
 
 class DBStorage():
-    """Class DBstorage
+    """
+    Class DBstorage
     """
     __engine = None
     __session = None
@@ -28,7 +29,8 @@ class DBStorage():
     }
 
     def __init__(self):
-        """Constructor of DBstorage
+        """
+        Constructor of DBstorage
         """
         user = os.getenv('HBNB_MYSQL_USER')
         password = os.getenv('HBNB_MYSQL_PWD')
@@ -46,7 +48,8 @@ class DBStorage():
             db.drop_all(tables)
 
     def all(self, cls=None):
-        """Dictionary to show objects of the classes
+        """
+        Dictionary to show objects of the classes
         """
         if cls:
             query = self.__session.query(cls).all()
@@ -66,23 +69,27 @@ class DBStorage():
             return my_dict
 
     def new(self, obj):
-        """Add the object to the session
+        """
+        Add the object to the session
         """
         self.__session.add(obj)
 
     def save(self):
-        """Save changes in the session
+        """
+        Save changes in the session
         """
         self.__session.commit()
 
     def delete(self, obj=None):
-        """Delete from the current session
+        """
+        Delete from the current session
         """
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
-        """reloads data
+        """
+        reloads data
         """
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)

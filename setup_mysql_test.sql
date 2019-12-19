@@ -1,5 +1,5 @@
 -- Script that prepares a MySQL server for the project
-
+-- Create of user and grant
 CREATE DATABASE IF NOT EXISTS `hbnb_test_db`;
 CREATE DATABASE IF NOT EXISTS `performance_schema`;
 CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost' IDENTIFIED BY 'hbnb_test_pwd';
