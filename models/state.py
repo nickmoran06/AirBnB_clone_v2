@@ -5,7 +5,7 @@ This is the state class
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import relationship
-from models import storage
+import models
 
 
 class State(BaseModel, Base):
@@ -23,7 +23,7 @@ class State(BaseModel, Base):
         """
         Getter cities
         """
-        dic = storage.all(City)
+        dic = models.storage.all(City)
         Mylist = []
         for ins in dic:
             if ins.state_id == self.id:
