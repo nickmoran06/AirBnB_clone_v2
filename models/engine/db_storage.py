@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+"""module to the class DBStorage"""
 import sqlalchemy as db
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
@@ -19,7 +19,10 @@ class DBStorage():
     __session = None
     classes = {
         'City': City,
-        'State': State
+        'State': State,
+        'User': User,
+        'Place': Place,
+        'Review': Review
     }
 
     def __init__(self):
