@@ -5,16 +5,18 @@ import models
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-Base = declarative_base()
 
+Base = declarative_base()
 
 class BaseModel:
     """This class will defines all common attributes/methods
     for other classes
     """
-    id = Column('id', Integer, primary_key=True)
-    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+    id = Column(String(60), nullable=False, primary_key=True)
+    created_at = Column(DateTime, default=datetime.utcnow,
+                        nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        nullable=False)
 
     def __init__(self, *args, **kwargs):
         """Instantiation of base model class
@@ -75,6 +77,6 @@ class BaseModel:
         return my_dict
 
     def delete(self):
-        """Delete object
+        """ Delete an current instance
         """
         del self
