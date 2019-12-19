@@ -60,7 +60,6 @@ class DBStorage():
 
             return my_dict
 
-
     def new(self, obj):
         """Add the object to the session
         """
