@@ -3,6 +3,8 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
+from models import storage
+from models.review import Review
 
 
 class Place(BaseModel, Base):
@@ -39,4 +41,8 @@ class Place(BaseModel, Base):
         """Getter attribute to return list of Review instances
         """
         Mylist = []
-        
+        Ins_Review = models.storage.all(Review)
+        for ins in Ins_Review:
+            if ins.place_id == self.id:
+                Mylist.append(ins)
+        return (Mylist)
