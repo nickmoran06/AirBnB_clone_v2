@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""module to the class DBStorage"""
+"""
+module to the class DBStorage
+"""
 import sqlalchemy as db
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base

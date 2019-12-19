@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""This is the place class"""
+"""
+This is the place class
+"""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
