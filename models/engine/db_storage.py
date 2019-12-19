@@ -2,7 +2,6 @@
 """
 module to the class DBStorage
 """
-import sqlalchemy as db
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
 from models.user import User
@@ -38,14 +37,12 @@ class DBStorage():
         database = os.getenv('HBNB_MYSQL_DB')
         env = os.getenv('HBNB_ENV')
 
-        self.__engine = db.create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
             user, password,
-            host, database, pool_pre_ping=True))
+            host, database), pool_pre_ping=True)
 
-        conection = self.__engine.connect()
-        metadata = db.MetaData()
         if env == "test":
-            db.drop_all(tables)
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """
@@ -72,7 +69,8 @@ class DBStorage():
         """
         Add the object to the session
         """
-        self.__session.add(obj)
+        if obj:
+            self.__session.add(obj)
 
     def save(self):
         """
@@ -84,7 +82,7 @@ class DBStorage():
         """
         Delete from the current session
         """
-        if obj is not None:
+        if obj:
             self.__session.delete(obj)
 
     def reload(self):
@@ -94,4 +92,4 @@ class DBStorage():
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
-        self.__session = Session
+        self.__session = Session()

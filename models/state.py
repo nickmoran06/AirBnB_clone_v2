@@ -5,6 +5,7 @@ This is the state class
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import relationship
+from models import storage
 
 
 class State(BaseModel, Base):
@@ -13,7 +14,7 @@ class State(BaseModel, Base):
         name: input name
     """
     __tablename__ = 'states'
-    name = Column('name', String(128), nullable=False)
+    name = Column(String(128), nullable=False)
     cities = relationship("City", cascade="all, delete, delete-orphan",
                           backref='state')
 
@@ -22,4 +23,9 @@ class State(BaseModel, Base):
         """
         Getter cities
         """
-        return self.cities
+        dic = storage.all(City)
+        Mylist = []
+        for ins in dic:
+            if ins.state_id == self.id:
+                Mylist.append(ins)
+        return(Mylist)
