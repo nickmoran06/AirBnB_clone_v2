@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 import sqlalchemy as db
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
+from models.base_model import Base
 from models.user import User
 from models.state import State
 from models.city import City
@@ -10,15 +11,16 @@ from models.place import Place
 from models.review import Review
 import os
 
-classes = {"City": City, "State": State}
-
 
 class DBStorage():
     """Class DBstorage
     """
     __engine = None
     __session = None
-
+    classes = {
+        'City': City,
+        'State': State
+    }
     def __init__(self):
         """Constructor of DBstorage
         """
@@ -40,14 +42,22 @@ class DBStorage():
     def all(self, cls=None):
         """Dictionary to show objects of the classes
         """
-        MyDict = {}
-        for i in classes:
-            if cls in classes or cls in classes[i] or cls is None:
-                objects = self.__session.query(classes[i]).all()
-                for obj in objects:
-                    key = obj.__class__.__name__ + "." + obj.id
-                    MyDict[key] = obj
-        return(MyDict)
+        if cls:
+            query = self.__session.query(cls).all()
+            for obj in query:
+                key = "{}.{}".format(type(obj).__name__, obj.id)
+                my_dict[key] = obj
+
+            return my_dict
+        else:
+            my_dict = {}
+            for key, val in self.classes.items():
+                query = self.__session.query(val).all()
+                for obj in query:
+                    key = "{}.{}".format(type(obj).__name__, obj.id)
+                    my_dict[key] = obj
+
+            return my_dict
 
     def new(self, obj):
         """Add the object to the session
@@ -71,4 +81,4 @@ class DBStorage():
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
-        self.__engine = Session
+        self.__session = Session
