@@ -5,7 +5,6 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 
-
 class City(BaseModel, Base):
     """This is the class for City
     Attributes:
@@ -17,4 +16,3 @@ class City(BaseModel, Base):
     state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
     places = relationship('Place', cascade='all, delete, delete-orphan',
                           backref='cities')
-

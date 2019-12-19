@@ -21,6 +21,7 @@ class DBStorage():
         'City': City,
         'State': State
     }
+
     def __init__(self):
         """Constructor of DBstorage
         """
