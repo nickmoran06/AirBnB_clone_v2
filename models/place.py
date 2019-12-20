@@ -46,36 +46,37 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
-    data = os.getenv('HBNB_TYPE_STOGAGE')
-    if data == 'db':
+    if os.getenv('HBNB_TYPE_STOGAGE') == 'db':
         reviews = relationship("Review", cascade='all, delete, delete-orphan',
                                backref="place")
-        amenities = relationship("Amenity", secondary=place_amenity, viewonly=False)
+        amenities = relationship("Amenity", secondary=place_amenity,
+                                 viewonly=False,
+                                 back_populates="place_amenities")
+    else:
+        @property
+        def reviews(self):
+            """
+            Getter attribute to return list of Review instances
+            """
+            Mylist = []
+            Ins_Review = models.storage.all(Review)
+            for ins in Ins_Review:
+                if ins.place_id == self.id:
+                    Mylist.append(ins)
 
-    @property
-    def reviews(self):
-        """
-        Getter attribute to return list of Review instances
-        """
-        Mylist = []
-        Ins_Review = models.storage.all(Review)
-        for ins in Ins_Review:
-            if ins.place_id == self.id:
-                Mylist.append(ins)
+            return (Mylist)
 
-        return (Mylist)
+        @property
+        def amenities(self):
+            """
+            Getter attribute to return list of Amenity instance
+            """
+            return self.amenity_ids
 
-    @property
-    def amenities(self):
-        """
-        Getter attribute to return list of Amenity instance
-        """
-        return self.amenity_ids
-
-    @amenities.setter
-    def amenities(self, obj=None):
-        """
-        Getter attribute to return list of Amenity instance
-        """
-        if type(obj) is Amenity and obj.id not in self.amenity_ids:
-            self.amenity_ids.append(Amenity.id)
+        @amenities.setter
+        def amenities(self, obj=None):
+            """
+            Getter attribute to return list of Amenity instance
+            """
+            if type(obj) is Amenity and obj.id not in self.amenity_ids:
+                self.amenity_ids.append(obj.id)
