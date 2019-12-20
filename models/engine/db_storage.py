@@ -60,8 +60,9 @@ class DBStorage():
             return my_dict
         else:
             my_dict = {}
-            for key, val in self.classes.items():
-                query = self.__session.query(val).all()
+            classes = [City, State, User, Place, Review, Amenity]
+            for val in classes:
+                query = self.__session.query(val)
                 for obj in query:
                     key = "{}.{}".format(type(obj).__name__, obj.id)
                     my_dict[key] = obj
