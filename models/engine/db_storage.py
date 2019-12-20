@@ -50,6 +50,7 @@ class DBStorage():
         Dictionary to show objects of the classes
         """
         if cls:
+            my_dict = {}
             query = self.__session.query(cls).all()
             for obj in query:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
