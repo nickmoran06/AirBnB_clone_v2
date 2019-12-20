@@ -31,10 +31,11 @@ class FileStorage:
         objs = self.__objects
         if cls:
             for key, value in objs.items():
-                if type(value).__name__ == type(cls).__name__:
+                if type(value).__name__ == cls.__class__.__name__:
                     my_dict[key] = value
             return my_dict
-        return self.__objects
+        else:
+            return self.__objects
 
     def new(self, obj):
         """sets __object to given obj

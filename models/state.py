@@ -26,7 +26,7 @@ class State(BaseModel, Base):
         """
         dic = models.storage.all(City)
         Mylist = []
-        for ins in dic:
-            if ins.state_id == self.id:
-                Mylist.append(ins)
+        for key, val in dic.items():
+            if val.state_id == self.id:
+                Mylist.append(val)
         return(Mylist)
