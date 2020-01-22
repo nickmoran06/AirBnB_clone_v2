@@ -1,13 +1,30 @@
 #!/usr/bin/python3
 """
-Fabric script that distributes an archive to your web servers,
-using the function do_deploy
+Fabric Script that creates and distributes an archive to your web servers
 """
 from fabric.api import *
+from datetime import datetime
 import os
 
 env.hosts = ['35.231.153.28', '35.231.90.183']
-env.user = "ubuntu"
+
+
+def do_pack():
+    """Function to geneate the .tgz file"""
+
+    try:
+        date = datetime.now().strftime("%Y%m%d%H%M%S")
+        collected_f = "versions/web_static_" + date + ".tgz"
+
+        if path.exists("versions") is False:
+            local("mkdir versions")
+
+        local("tar -zcvf {tar_file} web_static".format(tar_file=collected_f))
+
+        return collected_f
+
+    except Exception:
+        return None
 
 
 def do_deploy(archive_path):
@@ -35,3 +52,13 @@ def do_deploy(archive_path):
         return True
     except:
         return False
+
+
+def deploy():
+    """
+    Fabric function that creates and distributes an archive to your web servers
+    """
+    archive_path = do_pack()
+    if archive_path is None:
+        return False
+    return do_deploy(archive_path)
