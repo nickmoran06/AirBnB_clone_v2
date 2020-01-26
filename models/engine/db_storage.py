@@ -25,7 +25,7 @@ class DBStorage():
     objs = {
         'Amenity': Amenity,
         'State': State,
-        'Review': Review, 
+        'Review': Review,
         'Place': Place,
         'User': User,
         'City': City
