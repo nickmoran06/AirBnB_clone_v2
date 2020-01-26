@@ -18,8 +18,18 @@ class DBStorage():
     """
     Class DBstorage
     """
+
     __engine = None
     __session = None
+
+    objs = {
+        'Amenity': Amenity,
+        'State': State,
+        'Review': Review, 
+        'Place': Place,
+        'User': User,
+        'City': City
+    }
 
     def __init__(self):
         """
@@ -44,7 +54,7 @@ class DBStorage():
         """
         if cls:
             my_dict = {}
-            query = self.__session.query(cls)
+            query = self.__session.query(DBStorage.objs[cls])
             for obj in query:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
                 my_dict[key] = obj

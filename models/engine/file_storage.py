@@ -31,7 +31,7 @@ class FileStorage:
         objs = self.__objects
         if cls:
             for key, value in objs.items():
-                if type(value).__name__ == cls.__class__.__name__:
+                if type(value).__name__ == cls.__name__:
                     my_dict[key] = value
             return my_dict
         else:
